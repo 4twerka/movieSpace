@@ -16,7 +16,7 @@ function Header() {
             <div className="flex items-center gap-2">
                 <img className="w-8 h-8 md:w-10 md:h-10" src={logoHeader} alt="logotype" />
                 <span className="logoFont text-white text-3xl md:text-5xl">
-                    Movies<span className="text-red-500">.</span>
+                    Movie Space<span className="text-red-500">.</span>
                 </span>
             </div>
 

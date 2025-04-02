@@ -4,13 +4,13 @@ const API_KEY = "cf8f659d3c2a36f2361a2b1bdc7eefa3";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-function Trending() {
+function Recommend() {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}&language=un-US`);
+                const response = await fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US`);
                 const result = await response.json();
 
                 const moviesWithRuntime = await Promise.all(
@@ -35,7 +35,7 @@ function Trending() {
             <div className="w-full max-w-6xl text-white">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-4xl bebasFont font-semibold flex items-center gap-2">
-                        <span className="text-yellow-400">&#128293;</span> Trending
+                        YOU MAY LIKE THIS
                     </h2>
                     <button className="text-gray-400 hover:text-white">See More</button>
                 </div>
@@ -59,4 +59,4 @@ function Trending() {
     );
 }
 
-export { Trending };
+export { Recommend };
