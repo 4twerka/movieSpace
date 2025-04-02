@@ -44,7 +44,7 @@ function Header() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full right-0 w-48 bg-gradient-to-r from-black to-[#22000c] text-white rounded-md shadow-lg overflow-hidden"
+                    className="absolute z-50 top-full right-0 w-48 bg-gradient-to-r from-black to-[#22000c] text-white rounded-md shadow-lg overflow-hidden"
                     >
                     <ul className="flex flex-col interFont">
                         <li className="p-3 hover:bg-gray-800 cursor-pointer">Home</li>
