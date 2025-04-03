@@ -10,9 +10,11 @@ const MoviePage = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [trailer, setTrailer] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovie = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`);
         const data = await response.json();
@@ -30,6 +32,8 @@ const MoviePage = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -40,7 +44,8 @@ const MoviePage = () => {
 
   return (
     <div className="min-h-screen interFont bg-black text-white px-4 md:px-8 py-10">
-      <div className="max-w-7xl mx-auto space-y-8">
+      {isLoading ? (<div className="flex justify-center text-5xl text-white items-center">Loading...</div>) : (
+        <div className="max-w-7xl mx-auto space-y-8">
 
         <h1 className="text-3xl md:text-5xl font-bold">{movie.title}</h1>
         <p className="text-gray-400 text-lg">
@@ -87,6 +92,7 @@ const MoviePage = () => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };

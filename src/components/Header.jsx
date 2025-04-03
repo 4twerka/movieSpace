@@ -28,7 +28,7 @@ function Header() {
                     <Link to="/"><li className="text-white font-bold cursor-pointer">Home</li></Link>
                     <li className="cursor-pointer">Movies</li>
                     <li className="cursor-pointer">Cartoons</li>
-                    <li className="cursor-pointer">Profile</li>
+                    <Link to="/profile"><li className="cursor-pointer">Profile</li></Link>
                 </ul>
             </nav>
 
@@ -53,7 +53,7 @@ function Header() {
                         <Link to="/"><li className="p-3 hover:bg-gray-800 cursor-pointer">Home</li></Link>
                         <li className="p-3 hover:bg-gray-800 cursor-pointer">Movies</li>
                         <li className="p-3 hover:bg-gray-800 cursor-pointer">Cartoons</li>
-                        <li className="p-3 hover:bg-gray-800 cursor-pointer">Profile</li>
+                        <Link to="/profile"><li className="p-3 hover:bg-gray-800 cursor-pointer">Profile</li></Link>
                     </ul>
                     </motion.div>
                 ) : null}

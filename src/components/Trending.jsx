@@ -7,9 +7,12 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 function Trending() {
     const [movies, setMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchMovies = async () => {
+            setIsLoading(true);
+
             try {
                 const response = await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}&language=un-US`);
                 const result = await response.json();
@@ -26,6 +29,8 @@ function Trending() {
                 setMovies(moviesWithRuntime);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -42,21 +47,23 @@ function Trending() {
                     <button className="text-gray-400 hover:text-white">See More</button>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {movies.map((movie) => (
-                        <Link key={movie.id} to={`/movie/${movie.id}`}>
-                            <div className="space-y-2 cursor-pointer interFont">
-                                <div className="w-full rounded-lg overflow-hidden">
-                                    <img className="w-full h-auto object-cover" src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
+                    {isLoading ? (<div className="flex justify-center text-5xl text-white items-center">Loading...</div>) : (
+                        movies.map((movie) => (
+                            <Link key={movie.id} to={`/movie/${movie.id}`}>
+                                <div className="space-y-2 cursor-pointer interFont">
+                                    <div className="w-full rounded-lg overflow-hidden">
+                                        <img className="w-full h-auto object-cover" src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
+                                    </div>
+                                    <p className="text-sm font-medium truncate">{movie.title}</p>
+                                    <p className="text-xs text-gray-400">
+                                        {new Date(movie.release_date).getFullYear()} 
+                                        <span className="text-red-500"> &#8226; </span> 
+                                        {movie.runtime} min
+                                    </p>
                                 </div>
-                                <p className="text-sm font-medium truncate">{movie.title}</p>
-                                <p className="text-xs text-gray-400">
-                                    {new Date(movie.release_date).getFullYear()} 
-                                    <span className="text-red-500"> &#8226; </span> 
-                                    {movie.runtime} min
-                                </p>
-                            </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        ))
+                    )}
                 </div>
             </div>
         </div>
