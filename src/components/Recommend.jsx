@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const API_KEY = "cf8f659d3c2a36f2361a2b1bdc7eefa3";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -41,17 +42,19 @@ function Recommend() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     {movies.map((movie) => (
-                        <div key={movie.id} className="space-y-2 cursor-pointer interFont">
-                            <div className="w-full rounded-lg overflow-hidden">
-                                <img className="w-full h-auto object-cover" src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
+                        <Link to="/movie">
+                            <div key={movie.id} className="space-y-2 cursor-pointer interFont">
+                                <div className="w-full rounded-lg overflow-hidden">
+                                    <img className="w-full h-auto object-cover" src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
+                                </div>
+                                <p className="text-sm font-medium truncate">{movie.title}</p>
+                                <p className="text-xs text-gray-400">
+                                    {new Date(movie.release_date).getFullYear()} 
+                                    <span className="text-red-500"> &#8226; </span> 
+                                    {movie.runtime} min
+                                </p>
                             </div>
-                            <p className="text-sm font-medium truncate">{movie.title}</p>
-                            <p className="text-xs text-gray-400">
-                                {new Date(movie.release_date).getFullYear()} 
-                                <span className="text-red-500"> &#8226; </span> 
-                                {movie.runtime} min
-                            </p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
