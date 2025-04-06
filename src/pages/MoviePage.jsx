@@ -42,6 +42,8 @@ const MoviePage = () => {
 
   if (!movie) return <div className="text-white interFont text-center p-4">Loading...</div>;
 
+
+
   return (
     <div className="min-h-screen interFont bg-black text-white px-4 md:px-8 py-10">
       {isLoading ? (<div className="flex justify-center text-5xl text-white items-center">Loading...</div>) : (
