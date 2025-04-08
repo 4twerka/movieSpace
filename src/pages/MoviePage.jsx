@@ -72,9 +72,9 @@ const MoviePage = () => {
             <p className="text-gray-300 text-lg">{movie.overview}</p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="bg-red-600 hover:bg-red-500 transition px-6 py-3 rounded-lg text-lg">
+              <a href={movie.homepage} className="bg-red-600 hover:bg-red-500 transition px-6 py-3 rounded-lg text-lg">
                 Watch Now
-              </button>
+              </a>
               <button className="bg-gray-800 hover:bg-gray-700 transition px-6 py-3 rounded-lg text-lg">
                 + Add to Favorites
               </button>

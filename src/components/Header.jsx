@@ -41,7 +41,7 @@ function Header() {
                     <Link to="/"><li className="text-white font-bold cursor-pointer">Home</li></Link>
                     <li onClick={() => handleNavAndScroll("movies")} className="cursor-pointer">Movies</li>
                     <li onClick={() => handleNavAndScroll("cartoons")} className="cursor-pointer">Cartoons</li>
-                    <Link to="/profile"><li className="cursor-pointer">Profile</li></Link>
+                    <Link to="/register"><li className="cursor-pointer">Profile</li></Link>
                 </ul>
             </nav>
 

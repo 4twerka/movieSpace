@@ -8,6 +8,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 function Recommend() {
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -35,6 +36,8 @@ function Recommend() {
         fetchMovies();
     }, []);
 
+    const moviesToShow = showAll ? movies : movies.slice(0, 12);
+
     return (
         <div className="bg-black flex justify-center items-center min-h-screen px-4 py-8">
             <div className="w-full max-w-6xl text-white">
@@ -42,13 +45,14 @@ function Recommend() {
                     <h2 className="text-4xl bebasFont font-semibold flex items-center gap-2">
                         YOU MAY LIKE THIS
                     </h2>
-                    <button className="text-gray-400 hover:text-white">See More</button>
+                    {showAll ? (<button onClick={() => setShowAll(!showAll)} className="text-red-500 hover:text-white">Close</button>)
+                     : (<button onClick={() => setShowAll(!showAll)} className="text-gray-400 hover:text-white">See More</button>)}
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {isLoading ? (
                         <div className="flex justify-center text-5xl text-white items-center">Loading...</div>
                     ) : (
-                        movies.map((movie) => (
+                        moviesToShow.map((movie) => (
                             <Link key={movie.id} to={`/movie/${movie.id}`}>
                                 <div className="space-y-2 cursor-pointer interFont">
                                     <div className="w-full rounded-lg overflow-hidden">

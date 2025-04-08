@@ -6,7 +6,6 @@ import { Recommend } from "../components/Recommend";
 import { Cartoon } from "../components/Cartoon";
 import { motion, AnimatePresence } from 'framer-motion';
 
-
 function MainPage({ movieRef, cartoonRef }) {
   const [visible, setVisible] = useState(false);
 
@@ -64,7 +63,7 @@ function MainPage({ movieRef, cartoonRef }) {
           </motion.div>
         )}
       </AnimatePresence>
-      <Welcome />
+        <Welcome />
       <div id="movies" ref={movieRef}>
         <Trending />
         <Recommend />
