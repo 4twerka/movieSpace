@@ -16,6 +16,14 @@ function AppWrapper() {
   const cartoonRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [favouriteMovies, setFavouriteMovies] = useState(() => {
+    const stored = localStorage.getItem("favourites");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("favourites", JSON.stringify(favouriteMovies));
+  }, [favouriteMovies]);
 
   const handleScroll = (ref) => {
     if (location.pathname !== '/') {
@@ -43,8 +51,8 @@ function AppWrapper() {
       />
       <Routes>
         <Route path="/" element={<MainPage movieRef={movieRef} cartoonRef={cartoonRef} />} />
-        <Route path="/movie/:id" element={<MoviePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/movie/:id" element={<MoviePage addFavourites={setFavouriteMovies}/>} />
+        <Route path="/profile" element={<ProfilePage favourites={favouriteMovies}/>} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

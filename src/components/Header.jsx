@@ -41,7 +41,7 @@ function Header() {
                     <Link to="/"><li className="text-white font-bold cursor-pointer">Home</li></Link>
                     <li onClick={() => handleNavAndScroll("movies")} className="cursor-pointer">Movies</li>
                     <li onClick={() => handleNavAndScroll("cartoons")} className="cursor-pointer">Cartoons</li>
-                    <Link to="/register"><li className="cursor-pointer">Profile</li></Link>
+                    <Link to="/login"><li className="cursor-pointer">Profile</li></Link>
                 </ul>
             </nav>
 
@@ -65,7 +65,7 @@ function Header() {
                             <Link to="/"><li onClick={() => setIsOpen(false)} className="p-3 hover:bg-gray-800 cursor-pointer">Home</li></Link>
                             <li onClick={() => handleNavAndScroll("movies")} className="p-3 hover:bg-gray-800 cursor-pointer">Movies</li>
                             <li onClick={() => handleNavAndScroll("cartoons")} className="p-3 hover:bg-gray-800 cursor-pointer">Cartoons</li>
-                            <Link to="/profile"><li onClick={() => setIsOpen(false)} className="p-3 hover:bg-gray-800 cursor-pointer">Profile</li></Link>
+                            <Link to="/login"><li onClick={() => setIsOpen(false)} className="p-3 hover:bg-gray-800 cursor-pointer">Profile</li></Link>
                         </ul>
                     </motion.div>
                 )}

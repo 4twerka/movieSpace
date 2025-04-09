@@ -6,11 +6,15 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const YOUTUBE_BASE_URL = "https://www.youtube.com/embed/";
 
-const MoviePage = () => {
+const MoviePage = ({ addFavourites }) => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleAddFavourite = (movieData) => {
+    addFavourites((prev) => [...prev, movieData]);
+  };
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -39,10 +43,6 @@ const MoviePage = () => {
 
     fetchMovie();
   }, [id]);
-
-  if (!movie) return <div className="text-white interFont text-center p-4">Loading...</div>;
-
-
 
   return (
     <div className="min-h-screen interFont bg-black text-white px-4 md:px-8 py-10">
@@ -75,7 +75,16 @@ const MoviePage = () => {
               <a href={movie.homepage} className="bg-red-600 hover:bg-red-500 transition px-6 py-3 rounded-lg text-lg">
                 Watch Now
               </a>
-              <button className="bg-gray-800 hover:bg-gray-700 transition px-6 py-3 rounded-lg text-lg">
+              <button
+                onClick={() =>
+                  handleAddFavourite({
+                    id: movie.id,
+                    title: movie.title,
+                    poster_path: movie.poster_path,
+                  })
+                }                
+                className="bg-gray-800 hover:bg-gray-700 transition px-6 py-3 rounded-lg text-lg"
+              >
                 + Add to Favorites
               </button>
             </div>

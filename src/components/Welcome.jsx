@@ -6,23 +6,36 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 function Welcome() {
   const [movies, setMovies] = useState([]);
+  const [trailerKey, setTrailerKey] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const spiderManResponse = fetch(
+        const response = await fetch(
           `${BASE_URL}/search/movie?query=Spider-Man&api_key=${API_KEY}&language=en-US`
         );
+        const data = await response.json();
+        const firstMovie = data.results[0];
 
-        const [spiderManData] = await Promise.all([
-          (await spiderManResponse).json(),
-        ]);
+        if (firstMovie) {
+          setMovies([firstMovie]);
 
-        setMovies([
-          spiderManData.results[0],
-        ]);
+          const trailerResponse = await fetch(
+            `${BASE_URL}/movie/${firstMovie.id}/videos?api_key=${API_KEY}&language=en-US`
+          );
+          const trailerData = await trailerResponse.json();
+
+          const youtubeTrailer = trailerData.results.find(
+            (video) => video.type === "Trailer" && video.site === "YouTube"
+          );
+
+          if (youtubeTrailer) {
+            setTrailerKey(youtubeTrailer.key);
+          }
+        }
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("Error fetching movies or trailer:", error);
       }
     };
 
@@ -39,9 +52,14 @@ function Welcome() {
         <p className="text-gray-400 mt-4 text-base sm:text-lg md:text-xl interFont">
           Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...
         </p>
-        <button className="mt-6 px-6 py-2 border border-white text-white rounded flex items-center justify-center mx-auto md:mx-0 interFont hover:bg-white hover:text-black transition">
-          ▶ Watch Trailer
-        </button>
+        {trailerKey && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="mt-6 px-6 py-2 border border-white text-white rounded flex items-center justify-center mx-auto md:mx-0 interFont hover:bg-white hover:text-black transition"
+          >
+            ▶ Watch Trailer
+          </button>
+        )}
       </div>
 
       <div className="relative w-full md:w-1/2 flex justify-center md:justify-end items-center mt-10 md:mt-0">
@@ -58,6 +76,26 @@ function Welcome() {
           </div>
         ))}
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative w-full max-w-3xl aspect-video px-4">
+            <iframe
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+              title="Trailer"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full rounded-lg shadow-xl"
+            ></iframe>
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-2 right-2 text-white bg-black/50 hover:bg-black px-3 py-1 rounded text-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
