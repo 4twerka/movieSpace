@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { Header } from './components/Header';
 import { MainPage } from './pages/MainPage';
-import Footer from './components/Footer';
+import { Footer } from './components/Footer';
 import { MoviePage } from './pages/MoviePage';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/LoginPage';
