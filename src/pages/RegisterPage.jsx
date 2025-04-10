@@ -26,6 +26,7 @@ function RegisterPage() {
         });
       }
       toast.success("User registered successfully!", { position: "top-center" });
+      window.location.href = "/profile";
     } catch (error) {
       toast.error(error.message, { position: "bottom-center" });
     }
