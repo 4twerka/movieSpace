@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const API_KEY = "cf8f659d3c2a36f2361a2b1bdc7eefa3";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -13,7 +14,19 @@ const MoviePage = ({ addFavourites }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAddFavourite = (movieData) => {
-    addFavourites((prev) => [...prev, movieData]);
+    addFavourites((prev) => {
+      const alreadyExists = prev.some((movie) => movie.id === movieData.id);
+      if (alreadyExists) {
+        toast.info("This movie is already in your favourites.", { position: "top-center", toastId: movieData.id});
+        return prev;
+      } else {
+        toast.success("Added to favourites", {
+          position: "top-center",
+          toastId: movieData.id, 
+        });
+      }
+      return [...prev, movieData];
+    });
   };
 
   useEffect(() => {

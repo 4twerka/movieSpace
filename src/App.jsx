@@ -52,7 +52,7 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<MainPage movieRef={movieRef} cartoonRef={cartoonRef} />} />
         <Route path="/movie/:id" element={<MoviePage addFavourites={setFavouriteMovies}/>} />
-        <Route path="/profile" element={<ProfilePage favourites={favouriteMovies}/>} />
+        <Route path="/profile" element={<ProfilePage favourites={favouriteMovies} addFavourites={setFavouriteMovies}/>} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

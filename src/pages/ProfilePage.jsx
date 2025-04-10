@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../components/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
-function ProfilePage({ favourites }) {
+function ProfilePage({ favourites, addFavourites }) {
   const [userDetails, setUserDetails] = useState(null);
+
+  const handleDeleteAll = (movieData) => {
+    addFavourites([]);
+    toast.info("Movies has been removed", { position: "top-center", toastId: movieData.id});
+  }
+
+  const handleDelete = (movieData) => {
+    const result = favourites.filter((item)=> {
+        toast.info("Movie has been removed", { position: "top-center", toastId: movieData.id});
+        return item.id !== movieData.id;
+    });
+    addFavourites(result);
+  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -50,6 +64,7 @@ function ProfilePage({ favourites }) {
           <div className="w-full text-left">
             <h2 className="text-3xl font-semibold mb-6">🎬 Favorite Movies</h2>
             {favourites && favourites.length > 0 ? <button
+              onClick={handleDeleteAll}
               className="mb-6 px-5 py-2 rounded-full bg-gradient-to-r from-red-700 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 hover:brightness-110 transition duration-300"
             >
               🗑️ Remove All
@@ -75,6 +90,7 @@ function ProfilePage({ favourites }) {
                     )}
                     <p className="text-base font-medium truncate">{item.title}</p>
                     <button
+                      onClick={() => handleDelete(item)}
                       className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 hover:brightness-110 transition duration-300"
                     >
                       ❌ Remove
