@@ -21,6 +21,7 @@ function ProfilePage({ favourites, addFavourites }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      
       if (!user) return;
       const docRef = doc(db, "Users", user.uid);
       const docSnap = await getDoc(docRef);
@@ -48,11 +49,13 @@ function ProfilePage({ favourites, addFavourites }) {
           <h1 className="text-5xl font-bold tracking-tight mb-6">User Profile</h1>
 
           <div className="bg-[#111] p-10 rounded-3xl shadow-2xl border border-gray-800">
+            <div className="flex justify-center">
+              <img src={userDetails.photo} width={"10%"} className="rounded"/>
+            </div>
             <p className="text-2xl font-semibold mb-2">
               👤 {userDetails.firstName} {userDetails.lastName}
             </p>
-            <p className="text-lg text-gray-400 mb-6">🎂 Age: {userDetails.age}</p>
-
+            {/* <p className="text-lg text-gray-400 mb-6">🎂 Age: {userDetails.age}</p> */}
             <button
               onClick={handleLogout}
               className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-lg font-semibold shadow-lg hover:scale-105 transition transform duration-300"

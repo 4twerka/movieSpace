@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../components/firebase";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "../components/GoogleLogin";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -75,17 +76,7 @@ function LoginPage() {
           <span className="h-px w-1/4 bg-neutral-600" />
         </div>
 
-        <button
-          onClick={() => alert("Google sign-in logic goes here")}
-          className="flex items-center justify-center gap-2 w-full py-3 text-white bg-white/10 hover:bg-white/20 rounded-lg transition"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google logo"
-            className="w-5 h-5"
-          />
-          <span>Sign in with Google</span>
-        </button>
+        <GoogleLogin />
 
         <p className="text-center text-neutral-400 text-sm sm:text-base">
           Not a member?{" "}

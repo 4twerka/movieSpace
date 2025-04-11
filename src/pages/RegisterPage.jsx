@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { auth, db } from "../components/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "../components/GoogleLogin";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ function RegisterPage() {
           firstName,
           lastName,
           age,
+          photo: ""
         });
       }
       toast.success("User registered successfully!", { position: "top-center" });
@@ -107,16 +109,7 @@ function RegisterPage() {
           <span className="h-px w-1/4 bg-neutral-600" />
         </div>
 
-        <button
-          className="flex items-center justify-center gap-2 w-full py-3 text-white bg-white/10 hover:bg-white/20 rounded-lg transition"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google logo"
-            className="w-5 h-5"
-          />
-          <span>Sign up with Google</span>
-        </button>
+        <GoogleLogin />
 
         <p className="text-center text-neutral-400 text-sm sm:text-base">
           Already have an account?{" "}
