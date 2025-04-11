@@ -10,6 +10,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ToastContainer } from "react-toastify";
 import { auth } from './components/firebase';
+import { Series } from './pages/Series';
 
 function AppWrapper() {
   const movieRef = useRef(null);
@@ -55,6 +56,7 @@ function AppWrapper() {
         <Route path="/profile" element={<ProfilePage favourites={favouriteMovies} addFavourites={setFavouriteMovies}/>} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/series" element={<Series />}/>
       </Routes>
       <ToastContainer />
       <Footer />
