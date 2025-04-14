@@ -5,16 +5,21 @@ import { auth } from "../components/firebase";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "../components/GoogleLogin";
 
-function LoginPage() {
+function LoginPage({ setIsLogged }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success("User logged successfully!", { position: "top-center" });
-      window.location.href = "/profile";
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  
+      if (userCredential.user) {
+        localStorage.setItem("isLogged", "true");
+        setIsLogged(true);
+        toast.success("User logged successfully!", { position: "top-center" });
+        window.location.href = "/profile";
+      }
     } catch (error) {
       toast.error(error.message, { position: "bottom-center" });
     }

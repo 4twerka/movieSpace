@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../components/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function ProfilePage({ favourites, addFavourites }) {
   const [userDetails, setUserDetails] = useState(null);
@@ -81,11 +82,13 @@ function ProfilePage({ favourites, addFavourites }) {
                     className="bg-[#1a1a1a] p-4 rounded-xl shadow-lg border border-gray-700 hover:bg-[#222] transition"
                   >
                     {item.poster_path ? (
-                      <img
-                        src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
-                        alt={item.title}
-                        className="w-full h-56 object-cover rounded-lg mb-3"
-                      />
+                      <Link to={`/movie/${item.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
+                          alt={item.title}
+                          className="w-full h-56 object-cover rounded-lg mb-3"
+                        />
+                      </Link>
                     ) : (
                       <div className="w-full h-56 bg-gray-800 rounded-lg mb-3 flex items-center justify-center text-gray-500 text-sm">
                         No image
