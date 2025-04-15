@@ -93,7 +93,12 @@ function AppWrapper() {
         <Route path="/series" element={<Series />} />
         <Route
           path="/seriesPage/:id"
-          element={<SeriesPage addFavourites={setFavouriteMovies} />}
+          element={
+            <SeriesPage
+              addFavourites={setFavouriteMovies}
+              isLogged={!!user}
+            />
+          }
         />
       </Routes>
       <ToastContainer />

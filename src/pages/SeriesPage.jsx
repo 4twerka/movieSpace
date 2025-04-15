@@ -7,20 +7,30 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const YOUTUBE_BASE_URL = "https://www.youtube.com/embed/";
 
-const SeriesPage = ({ addFavourites }) => {
+const SeriesPage = ({ addFavourites, isLogged }) => {
   const { id } = useParams();
   const [series, setSeries] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAddFavourite = (seriesData) => {
+    if (!isLogged) {
+      toast.error("You need to login first.", {
+        position: "top-center",
+      });
+      return;
+    }
+
     addFavourites((prev) => {
       const alreadyExists = prev.some((item) => item.id === seriesData.id);
       if (alreadyExists) {
-        toast.info("This series is already in your favourites.", { position: "top-center", toastId: seriesData.id });
+        toast.info("This movie is already in your favourites.", {
+          position: "top-center",
+          toastId: seriesData.id,
+        });
         return prev;
       } else {
-        toast.success("Added to favourites", {
+        toast.success("Added to favourites.", {
           position: "top-center",
           toastId: seriesData.id,
         });

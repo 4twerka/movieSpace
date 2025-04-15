@@ -31,7 +31,7 @@ const MoviePage = ({ addFavourites, isLogged }) => {
         });
         return prev;
       } else {
-        toast.success("Added to favourites", {
+        toast.success("Added to favourites.", {
           position: "top-center",
           toastId: movieData.id,
         });
