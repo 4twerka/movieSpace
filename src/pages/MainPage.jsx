@@ -4,7 +4,7 @@ import { Welcome } from "../components/Welcome";
 import { Trending } from "../components/Trending";
 import { Recommend } from "../components/Recommend";
 import { Cartoon } from "../components/Cartoon";
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 function MainPage({ movieRef, cartoonRef }) {
   const [visible, setVisible] = useState(false);

@@ -7,22 +7,19 @@ import { Link } from "react-router-dom";
 function ProfilePage({ favourites, addFavourites }) {
   const [userDetails, setUserDetails] = useState(null);
 
-  const handleDeleteAll = (movieData) => {
+  const handleDeleteAll = () => {
     addFavourites([]);
-    toast.info("Movies has been removed", { position: "top-center", toastId: movieData.id});
-  }
+    toast.info("All movies have been removed", { position: "top-center" });
+  };
 
   const handleDelete = (movieData) => {
-    const result = favourites.filter((item)=> {
-        toast.info("Movie has been removed", { position: "top-center", toastId: movieData.id});
-        return item.id !== movieData.id;
-    });
-    addFavourites(result);
-  }
+    const updated = favourites.filter((item) => item.id !== movieData.id);
+    addFavourites(updated);
+    toast.info("Movie has been removed", { position: "top-center" });
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      
       if (!user) return;
       const docRef = doc(db, "Users", user.uid);
       const docSnap = await getDoc(docRef);
@@ -30,36 +27,43 @@ function ProfilePage({ favourites, addFavourites }) {
         setUserDetails(docSnap.data());
       }
     });
-
     return () => unsubscribe();
   }, []);
 
-  async function handleLogout() {
+  useEffect(() => {
+    if (userDetails?.photo) {
+      console.log("userDetails.photo:", userDetails.photo);
+    }
+  }, [userDetails]);
+
+  const handleLogout = async () => {
     try {
       await auth.signOut();
       window.location.href = "/login";
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center py-12 px-6">
       {userDetails ? (
         <div className="max-w-5xl w-full space-y-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-6">User Profile</h1>
-
           <div className="bg-[#111] p-10 rounded-3xl shadow-2xl border border-gray-800">
             <div className="flex justify-center">
-              <img src={userDetails.photo} width={"10%"} className="rounded"/>
+              <img
+                src={userDetails.photo}
+                alt="Avatar"
+                className="w-24 h-24 rounded-full object-cover border-4 border-neutral-700"
+              />
             </div>
-            <p className="text-2xl font-semibold mb-2">
+            <p className="text-2xl font-semibold mt-4">
               👤 {userDetails.firstName} {userDetails.lastName}
             </p>
-            {/* <p className="text-lg text-gray-400 mb-6">🎂 Age: {userDetails.age}</p> */}
             <button
               onClick={handleLogout}
-              className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-lg font-semibold shadow-lg hover:scale-105 transition transform duration-300"
+              className="mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-lg font-semibold shadow-lg hover:scale-105 transition duration-300"
             >
               🔒 Log Out
             </button>
@@ -67,18 +71,19 @@ function ProfilePage({ favourites, addFavourites }) {
 
           <div className="w-full text-left">
             <h2 className="text-3xl font-semibold mb-6">🎬 Favorite Movies</h2>
-            {favourites && favourites.length > 0 ? <button
-              onClick={handleDeleteAll}
-              className="mb-6 px-5 py-2 rounded-full bg-gradient-to-r from-red-700 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 hover:brightness-110 transition duration-300"
-            >
-              🗑️ Remove All
-            </button>
-            : null}
-            {favourites && favourites.length > 0 ? (
+            {favourites.length > 0 && (
+              <button
+                onClick={handleDeleteAll}
+                className="mb-6 px-5 py-2 rounded-full bg-gradient-to-r from-red-700 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 transition duration-300"
+              >
+                🗑️ Remove All
+              </button>
+            )}
+            {favourites.length > 0 ? (
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
                 {favourites.map((item) => (
                   <div
-                    key={item.id || item.title}
+                    key={item.id}
                     className="bg-[#1a1a1a] p-4 rounded-xl shadow-lg border border-gray-700 hover:bg-[#222] transition"
                   >
                     {item.poster_path ? (
@@ -97,7 +102,7 @@ function ProfilePage({ favourites, addFavourites }) {
                     <p className="text-base font-medium truncate">{item.title}</p>
                     <button
                       onClick={() => handleDelete(item)}
-                      className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 hover:brightness-110 transition duration-300"
+                      className="mt-3 px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-pink-600 text-white text-sm font-semibold shadow-md hover:scale-105 transition duration-300"
                     >
                       ❌ Remove
                     </button>

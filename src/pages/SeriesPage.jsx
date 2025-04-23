@@ -15,7 +15,7 @@ const SeriesPage = ({ addFavourites, isLogged }) => {
 
   const handleAddFavourite = (seriesData) => {
     if (!isLogged) {
-      toast.error("You need to login first.", {
+      toast.warn("You need to login first.", {
         position: "top-center",
       });
       return;
