@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logoHeader from "../assets/pictures/logoHeader.png";
-import { AnimatePresence } from "framer-motion";
+import { motion , AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {

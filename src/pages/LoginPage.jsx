@@ -45,6 +45,7 @@ function LoginPage({ setIsLogged }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autocomplete="username"
             />
           </div>
           <div className="flex items-center bg-neutral-800 rounded-lg overflow-hidden">
@@ -65,6 +66,7 @@ function LoginPage({ setIsLogged }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autocomplete="current-password"
             />
           </div>
           <button
